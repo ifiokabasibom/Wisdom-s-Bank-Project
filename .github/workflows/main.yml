@@ -30,7 +30,12 @@ jobs:
           git add postman_collection.json
           git commit -m "Update Postman collection $(date +'%Y-%m-%d %H:%M:%S')"
 
-      # Step 4: Push the changes back to GitHub
+      # Step 4: Push the changes back to GitHub and #Step 5 (Optimization) - Github Token
       - name: Push Changes
         run: |
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+     
+      
