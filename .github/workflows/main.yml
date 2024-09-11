@@ -22,21 +22,24 @@ jobs:
           --header 'X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}' \
           --output postman_collection.json
 
+
       # Step 3: Commit the updated collection file
       - name: Commit Changes
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add postman_collection.json
-          git commit -m "Update Postman collection $(date +'%Y-%m-%d %H:%M:%S')"
-
-      # Step 4: Push the changes back to GitHub and #Step 5 (Optimization) - Github Token
+          # Check if there are changes before committing
+          git diff --cached --exit-code || git commit -m "Update Postman collection $(date +'%Y-%m-%d %H:%M:%S')"
+      
+      # Step 4: Push the changes back to GitHub
       - name: Push Changes
         run: |
-          git diff --quiet && git diff --staged --quiet || git commit -m "Updated Postman collection"
-          git push
+          # Only push if there was a commit
+          git diff --cached --exit-code || git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
      
       
