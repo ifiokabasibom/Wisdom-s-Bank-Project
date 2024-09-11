@@ -1,0 +1,1239 @@
+{
+	"info": {
+		"_postman_id": "b4092cf4-49c1-4b00-8c39-b930dd3616a5",
+		"name": "WISDOM ABASIBOM QA BANK MOCK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19130704"
+	},
+	"item": [
+		{
+			"name": "TC-1C",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Store the JSON response in a variable\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"// Check that the account creation was successful\r",
+							"pm.test(\"Account creation was successful\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"Account created successfully\");\r",
+							"});\r",
+							"\r",
+							"// Check that the response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Check specific fields in the response body\r",
+							"pm.test(\"Check required fields in the response body\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.customerDetails.firstName).to.eql(\"Wisdom\");\r",
+							"    pm.expect(jsonData.customerDetails.lastName).to.eql(\"Abasibom\");\r",
+							"    pm.expect(jsonData.customerDetails.email).to.not.be.empty;\r",
+							"    pm.expect(jsonData.identification.idNumber).to.eql(\"12345678901\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\r\nTC 1: Verify Account Creation \r\nC. Positive API Scenario\r\n*/\r\n\r\n{\r\n    \"customerDetails\": {\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"{{$randomFirstName}}\",\r\n        \"dateOfBirth\": \"{{$randomDatePast}}\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"wisdomabasibom@example.com\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\r\n        \"address\": {\r\n            \"street\": \"{{$randomStreetAddress}}\",\r\n            \"city\": \"{{$randomCity}}\",\r\n            \"country\": \"{{$randomCountry}}\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"{{$randomCurrencyName}}\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/createAccount",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"createAccount"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-1C",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "/*\r\nTC 1: Verify Account Creation \r\nC. Positive API Scenario\r\n*/\r\n\r\n{\r\n    \"customerDetails\": {\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"Boris\",\r\n        \"dateOfBirth\": \"Wed Feb 14 2024 18:34:33 GMT+0100 (West Africa Standard Time)\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"johndoe@example.com\",\r\n        \"phoneNumber\": \"297-936-6666\",\r\n        \"address\": {\r\n            \"street\": \"852 Christa Parkways\",\r\n            \"city\": \"Fullerton\",\r\n            \"country\": \"Isle of Man\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"Kina\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"Cecil\",\r\n        \"lastName\": \"Daugherty\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"268-440-0830\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/createAccount",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"createAccount"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"status\": \"success\",\r\n    \"message\": \"Account created successfully\",\r\n    \"accountDetails\": {\r\n        \"accountNumber\": \"{{$randomBankAccount}}\",\r\n        \"accountName\": \"Wisdom Abasibom\",\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"NGN\",\r\n        \"branch\": \"Lagos Island Branch\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"{{$randomAlphaNumeric}}\",\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\r\n        \"email\": \"{{$randomEmail}}\"\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n    },\r\n    \"creationDate\": \"{{$isoTimestamp}}\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-1D",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate status code is 400\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"// Validate response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Parse response body as JSON\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"// Validate the \"status\" is \"error\"\r",
+							"pm.test(\"Status is 'error'\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+							"});\r",
+							"\r",
+							"// Validate \"message\" value in response\r",
+							"pm.test(\"Message value is 'Validation failed'\", function () {\r",
+							"    pm.expect(jsonData.message).to.eql(\"Validation failed\");\r",
+							"});\r",
+							"\r",
+							"// Validate \"errors.message\" value in response\r",
+							"pm.test(\"Errors.message value is 'The first name field is required.'\", function () {\r",
+							"    pm.expect(jsonData.errors[0].message).to.eql(\"The first name field is required.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\r\nTC 1: Verify Account Creation \r\nD. Negative API Scenario\r\n*/\r\n{\r\n    \"customerDetails\": {\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"{{$randomFirstName}}\",\r\n        \"dateOfBirth\": \"{{$randomDatePast}}\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"wisdomabasibom@example.com\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\r\n        \"address\": {\r\n            \"street\": \"{{$randomStreetAddress}}\",\r\n            \"city\": \"{{$randomCity}}\",\r\n            \"country\": \"{{$randomCountry}}\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"{{$randomCurrencyName}}\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/invalidCreateAccount",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"invalidCreateAccount"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-1D",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "/*\r\nTC 1: Verify Account Creation \r\nD. Negative API Scenario\r\n*/\r\n{\r\n    \"customerDetails\": {\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"Fabiola\",\r\n        \"dateOfBirth\": \"Wed Apr 24 2024 16:16:38 GMT+0100 (West Africa Standard Time)\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"johndoe@example.com\",\r\n        \"phoneNumber\": \"321-749-9098\",\r\n        \"address\": {\r\n            \"street\": \"6753 Brandy Highway\",\r\n            \"city\": \"Gerlachview\",\r\n            \"country\": \"Palestinian Territory\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"Somoni\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"Justina\",\r\n        \"lastName\": \"Wilkinson\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"203-261-7666\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/invalidCreateAccount",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"invalidCreateAccount"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Validation failed\",\n    \"errors\": [\n        {\n            \"field\": \"firstName\",\n            \"message\": \"The first name field is required.\"\n        }\n    ],\n    \"code\": \"400\",\n    \"timestamp\": \"{{$isoTimestamp}}\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-2C",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body\r",
+							"let responseData = pm.response.json();\r",
+							"\r",
+							"// Check that the status is 'success'\r",
+							"pm.test(\"Status is 'success'\", function () {\r",
+							"    pm.expect(responseData.status).to.eql(\"success\");\r",
+							"});\r",
+							"\r",
+							"// Check that the message is 'Account created successfully'\r",
+							"pm.test(\"Message is 'Account created successfully'\", function () {\r",
+							"    pm.expect(responseData.message).to.eql(\"Account created successfully\");\r",
+							"});\r",
+							"\r",
+							"// Check that the response code is 201\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Check that the response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Check that accountDetails object is not empty\r",
+							"pm.test(\"accountDetails is not empty\", function () {\r",
+							"    pm.expect(responseData.accountDetails).to.be.an(\"object\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that customerDetails object is not empty\r",
+							"pm.test(\"customerDetails is not empty\", function () {\r",
+							"    pm.expect(responseData.customerDetails).to.be.an(\"object\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that identification object is not empty\r",
+							"pm.test(\"identification is not empty\", function () {\r",
+							"    pm.expect(responseData.identification).to.be.an(\"object\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that nextOfKin object is not empty\r",
+							"pm.test(\"nextOfKin is not empty\", function () {\r",
+							"    pm.expect(responseData.nextOfKin).to.be.an(\"object\").that.is.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\r\nTC 2: Verify Duplicate Account Creation \r\nC. Positive API Scenario\r\n*/\r\n\r\n{\r\n    \"customerDetails\": {\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"{{$randomFirstName}}\",\r\n        \"dateOfBirth\": \"{{$randomDatePast}}\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"wisdomabasibom@example.com\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\r\n        \"address\": {\r\n            \"street\": \"{{$randomStreetAddress}}\",\r\n            \"city\": \"{{$randomCity}}\",\r\n            \"country\": \"{{$randomCountry}}\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"{{$randomCurrencyName}}\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/createDuplicateAccount",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"createDuplicateAccount"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-2C",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "/*\r\nTC 2: Verify Dupplicate Account Creation \r\nC. Positive API Scenario\r\n*/\r\n\r\n{\r\n    \"customerDetails\": {\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"middleName\": \"James\",\r\n        \"dateOfBirth\": \"1990-05-15\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"johndoe@example.com\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"address\": {\r\n            \"street\": \"123 Main St\",\r\n            \"city\": \"Lagos\",\r\n            \"state\": \"Lagos\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"NGN\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"Jane\",\r\n        \"lastName\": \"Doe\",\r\n        \"relationship\": \"Sister\",\r\n        \"phoneNumber\": \"+2348098765432\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/createDuplicateAccount",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"createDuplicateAccount"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n  \"status\": \"success\",\r\n  \"message\": \"Account created successfully\",\r\n  \"accountDetails\": {\r\n    \"accountNumber\": \"{{$randomBankAccount}}\",\r\n    \"accountName\": \"Wisdom Abasibom\",\r\n    \"accountType\": \"Savings\",\r\n    \"currency\": \"NGN\",\r\n    \"branch\": \"Lagos Island Branch\"\r\n  },\r\n  \"customerDetails\": {\r\n    \"customerId\": \"{{$randomAlphaNumeric}}\",\r\n    \"firstName\": \"Wisdom\",\r\n    \"lastName\": \"Abasibom\",\r\n    \"phoneNumber\": \"{{$randomPhoneNumber}}\",\r\n    \"email\": \"johndoe@example.com\"\r\n  },\r\n  \"identification\": {\r\n    \"idType\": \"BVN\",\r\n    \"idNumber\": \"12345678901\"\r\n  },\r\n  \"nextOfKin\": {\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"relationship\": \"Friend\",\r\n    \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n  },\r\n  \"creationDate\": \"{{$isoTimestamp}}\"\r\n}\r\n"
+				}
+			]
+		},
+		{
+			"name": "TC-2D",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body\r",
+							"let responseData = pm.response.json();\r",
+							"\r",
+							"// Check that the status in the response body is 'error'\r",
+							"pm.test(\"Status is 'error'\", function () {\r",
+							"    pm.expect(responseData.status).to.eql(\"error\");\r",
+							"});\r",
+							"\r",
+							"// Check the main message in the response body is 'Account creation failed'\r",
+							"pm.test(\"Message is 'Account creation failed'\", function () {\r",
+							"    pm.expect(responseData.message).to.eql(\"Account creation failed\");\r",
+							"});\r",
+							"\r",
+							"// Check the status code is 409\r",
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});\r",
+							"\r",
+							"// Check the response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Check the error messages in the response body\r",
+							"pm.test(\"Error message for email\", function () {\r",
+							"    pm.expect(responseData.errors[0].field).to.eql(\"email\");\r",
+							"    pm.expect(responseData.errors[0].message).to.eql(\"An account with this email already exists.\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message for phoneNumber\", function () {\r",
+							"    pm.expect(responseData.errors[1].field).to.eql(\"phoneNumber\");\r",
+							"    pm.expect(responseData.errors[1].message).to.eql(\"An account with this phone number already exists.\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message for BVN\", function () {\r",
+							"    pm.expect(responseData.errors[2].field).to.eql(\"bvn\");\r",
+							"    pm.expect(responseData.errors[2].message).to.eql(\"An account with this BVN already exists.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\r\nTC 2: Verify Dupplicate Account Creation \r\nD. Negative API Scenario\r\n*/\r\n{\r\n    \"customerDetails\": {\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"{{$randomFirstName}}\",\r\n        \"dateOfBirth\": \"{{$randomDatePast}}\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"wisdomabasibom@example.com\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\",\r\n        \"address\": {\r\n            \"street\": \"{{$randomStreetAddress}}\",\r\n            \"city\": \"{{$randomCity}}\",\r\n            \"country\": \"{{$randomCountry}}\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"{{$randomCurrencyName}}\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/createBadDuplicateAccount",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"createBadDuplicateAccount"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-2D",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "/*\r\nTC 2: Verify Dupplicate Account Creation \r\nD. Negative API Scenario\r\n*/\r\n{\r\n    \"customerDetails\": {\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"middleName\": \"Austyn\",\r\n        \"dateOfBirth\": \"Tue Jun 11 2024 00:55:53 GMT+0100 (West Africa Standard Time)\",\r\n        \"gender\": \"Male\",\r\n        \"email\": \"johndoe@example.com\",\r\n        \"phoneNumber\": \"516-609-9514\",\r\n        \"address\": {\r\n            \"street\": \"459 Kuhn Tunnel\",\r\n            \"city\": \"Fargo\",\r\n            \"country\": \"Colombia\",\r\n            \"postalCode\": \"100001\"\r\n        }\r\n    },\r\n    \"identification\": {\r\n        \"idType\": \"BVN\",\r\n        \"idNumber\": \"12345678901\"\r\n    },\r\n    \"accountDetails\": {\r\n        \"accountType\": \"Savings\",\r\n        \"currency\": \"Brunei Dollar\",\r\n        \"initialDeposit\": 1000\r\n    },\r\n    \"nextOfKin\": {\r\n        \"firstName\": \"Margarette\",\r\n        \"lastName\": \"Turcotte\",\r\n        \"relationship\": \"Friend\",\r\n        \"phoneNumber\": \"992-826-1274\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/createBadDuplicateAccount",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"createBadDuplicateAccount"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Account creation failed\",\n    \"errors\": [\n        {\n            \"field\": \"email\",\n            \"message\": \"An account with this email already exists.\"\n        },\n        {\n            \"field\": \"phoneNumber\",\n            \"message\": \"An account with this phone number already exists.\"\n        },\n        {\n            \"field\": \"bvn\",\n            \"message\": \"An account with this BVN already exists.\"\n        }\n    ],\n    \"code\": \"409\",\n    \"timestamp\": \"{{$isoTimestamp}}\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body\r",
+							"let responseData = pm.response.json();\r",
+							"\r",
+							"// Check the status is 'success'\r",
+							"pm.test(\"Status is 'success'\", function () {\r",
+							"    pm.expect(responseData.status).to.eql(\"success\");\r",
+							"});\r",
+							"\r",
+							"// Check the message is 'Deposit transaction completed successfully'\r",
+							"pm.test(\"Message is 'Deposit transaction completed successfully'\", function () {\r",
+							"    pm.expect(responseData.message).to.eql(\"Deposit transaction completed successfully\");\r",
+							"});\r",
+							"\r",
+							"// Check that transactionDetails.transactionId is not empty\r",
+							"pm.test(\"transactionDetails.transactionId is not empty\", function () {\r",
+							"    pm.expect(responseData.transactionDetails.transactionId).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that transactionDetails.amount is a valid number and greater than zero\r",
+							"pm.test(\"transactionDetails.amount is a valid number and greater than zero\", function () {\r",
+							"    pm.expect(responseData.transactionDetails.amount).to.be.a('number').and.to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"// Check that transactionDetails.accountNumber is not empty\r",
+							"pm.test(\"transactionDetails.accountNumber is not empty\", function () {\r",
+							"    pm.expect(responseData.transactionDetails.accountNumber).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"// Check customerDetails fields are not empty\r",
+							"pm.test(\"customerDetails.customerId is not empty\", function () {\r",
+							"    pm.expect(responseData.customerDetails.customerId).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"customerDetails.firstName is not empty\", function () {\r",
+							"    pm.expect(responseData.customerDetails.firstName).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"customerDetails.lastName is not empty\", function () {\r",
+							"    pm.expect(responseData.customerDetails.lastName).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"customerDetails.phoneNumber is not empty\", function () {\r",
+							"    pm.expect(responseData.customerDetails.phoneNumber).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"customerDetails.email is not empty\", function () {\r",
+							"    pm.expect(responseData.customerDetails.email).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"// Check the response status code is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check the response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//TC 3: Check deposit of funds into a valid account\r\n{\r\n    \"transactionDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"amount\": 5000,\r\n        \"currency\": \"NGN\",\r\n        \"transactionType\": \"deposit\",\r\n        \"transactionDate\": \"2024-09-09T14:00:00Z\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"wisdomabasibom@example.com\"\r\n    },\r\n    \"paymentMethod\": {\r\n        \"method\": \"bank_transfer\",\r\n        \"referenceId\": \"TRANS123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"note\": \"Deposit for savings account\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/validDeposit",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"validDeposit"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-3",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//TC 3: Check deposit of funds into a valid account\r\n{\r\n    \"transactionDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"amount\": 5000,\r\n        \"currency\": \"NGN\",\r\n        \"transactionType\": \"deposit\",\r\n        \"transactionDate\": \"2024-09-10T17:21:37.199Z\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"wisdomabasibom@example.com\"\r\n    },\r\n    \"paymentMethod\": {\r\n        \"method\": \"bank_transfer\",\r\n        \"referenceId\": \"TRANS123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Deposit for savings account\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/validDeposit",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"validDeposit"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Deposit transaction completed successfully\",\n    \"transactionDetails\": {\n        \"transactionId\": \"TRANS987654321\",\n        \"accountNumber\": \"1234567890\",\n        \"amount\": 5000,\n        \"currency\": \"NGN\",\n        \"transactionType\": \"deposit\",\n        \"transactionDate\": \"{{$isoTimestamp}}\",\n        \"newBalance\": 15000\n    },\n    \"customerDetails\": {\n        \"customerId\": \"CUST0987654321\",\n        \"firstName\": \"Wisdom\",\n        \"lastName\": \"Abasibom\",\n        \"phoneNumber\": \"+2348012345678\",\n        \"email\": \"wisdomabasibom@example.com\"\n    },\n    \"timestamp\": \"{{$isoTimestamp}}\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body\r",
+							"let responseData = pm.response.json();\r",
+							"\r",
+							"// Check that the response status is 'error'\r",
+							"pm.test(\"Status is 'error'\", function () {\r",
+							"    pm.expect(responseData.status).to.eql(\"error\");\r",
+							"});\r",
+							"\r",
+							"// Check that the message in the response body is 'Withdrawal failed'\r",
+							"pm.test(\"Message is 'Withdrawal failed'\", function () {\r",
+							"    pm.expect(responseData.message).to.eql(\"Withdrawal failed\");\r",
+							"});\r",
+							"\r",
+							"// Check the individual error field and message for 'amount'\r",
+							"pm.test(\"Error field is 'amount'\", function () {\r",
+							"    pm.expect(responseData.errors[0].field).to.eql(\"amount\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message for 'Insufficient funds'.\", function () {\r",
+							"    pm.expect(responseData.errors[0].message).to.eql(\"Insufficient funds. The requested amount exceeds the available balance.\");\r",
+							"});\r",
+							"\r",
+							"// Check the response status code is 400\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"// Check the response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Parse the request body to get amount and account balance\r",
+							"let requestBody = JSON.parse(pm.request.body.raw);\r",
+							"let amount = requestBody.transactionDetails.amount;\r",
+							"let balance = requestBody.transactionDetails.accountBalance;\r",
+							"\r",
+							"// Determine which response to use\r",
+							"if (amount > balance) {\r",
+							"    // Set to overdraft mock response\r",
+							"    pm.environment.set(\"mockResponse\", \"overdraft\");\r",
+							"} else {\r",
+							"    // Set to success mock response\r",
+							"    pm.environment.set(\"mockResponse\", \"success\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//TC 4: Verify withdrawal of funds with insufficient balance (OVERDRAFT)\r\n\r\n{\r\n    \"transactionDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"amount\": 30,\r\n        \"accountBalance\": 50,\r\n        \"currency\": \"NGN\",\r\n        \"transactionType\": \"withdrawal\",\r\n        \"transactionDate\": \"{{$isoTimestamp}}\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"wisdomabasibom@example.com\"\r\n    },\r\n    \"withdrawalMethod\": {\r\n        \"method\": \"ATM\",\r\n        \"referenceId\": \"ATM123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Withdrawal for Wisdom’s personal expenses\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/overdraftWithdrawal",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"overdraftWithdrawal"
+					],
+					"query": [
+						{
+							"key": "mockResponse",
+							"value": "TC-4 OVERDRAFT",
+							"disabled": true
+						},
+						{
+							"key": "mockResponse",
+							"value": "TC-5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-4 OVERDRAFT",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//TC 4: Verify withdrawal of funds with insufficient balance (OVERDRAFT)\r\n{\r\n    \"transactionDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"amount\": 3000000,\r\n        \"currency\": \"NGN\",\r\n        \"transactionType\": \"withdrawal\",\r\n        \"transactionDate\": \"{{$isoTimestamp}}\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"wisdomabasibom@example.com\"\r\n    },\r\n    \"withdrawalMethod\": {\r\n        \"method\": \"ATM\",\r\n        \"referenceId\": \"ATM123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Withdrawal for Wisdom’s personal expenses\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mock_baseURL}}/overdraftWithdrawal",
+							"host": [
+								"{{mock_baseURL}}"
+							],
+							"path": [
+								"overdraftWithdrawal"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Withdrawal failed\",\n    \"errors\": [\n        {\n            \"field\": \"amount\",\n            \"message\": \"Insufficient funds. The requested amount exceeds the available balance.\"\n        }\n    ],\n    \"code\": \"400\",\n    \"timestamp\": \"{{$isoTimestamp}}\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Check that the status code is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check that the status is \"success\"\r",
+							"pm.test(\"Status is 'success'\", function () {\r",
+							"    pm.expect(response.status).to.eql(\"success\");\r",
+							"});\r",
+							"\r",
+							"// Check that the message is \"Withdrawal transaction completed successfully\"\r",
+							"pm.test(\"Message is correct\", function () {\r",
+							"    pm.expect(response.message).to.eql(\"Withdrawal transaction completed successfully\");\r",
+							"});\r",
+							"\r",
+							"// Check that transactionDetails is not empty\r",
+							"pm.test(\"transactionDetails is not empty\", function () {\r",
+							"    pm.expect(response.transactionDetails).to.be.an('object').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that customerDetails is not empty\r",
+							"pm.test(\"customerDetails is not empty\", function () {\r",
+							"    pm.expect(response.customerDetails).to.be.an('object').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that transactionDetails.transactionType is \"withdrawal\"\r",
+							"pm.test(\"transactionType is 'withdrawal'\", function () {\r",
+							"    pm.expect(response.transactionDetails.transactionType).to.eql(\"withdrawal\");\r",
+							"});\r",
+							"\r",
+							"// Check that the response time is less than 500 ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//TC 5: Check withdrawal of funds with sufficient balance\r\n\r\n{\r\n    \"transactionDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"amount\": 300,\r\n        \"currency\": \"NGN\",\r\n        \"transactionType\": \"withdrawal\",\r\n        \"transactionDate\": \"2024-09-09T15:00:00Z\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"Wisdom\",\r\n        \"lastName\": \"Abasibom\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"wisdomabasibom@example.com\"\r\n    },\r\n    \"withdrawalMethod\": {\r\n        \"method\": \"ATM\",\r\n        \"referenceId\": \"ATM123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Withdrawal for Wisdom’s personal expenses\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/withdrawal",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"withdrawal"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-5",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//TC 5: Check withdrawal of funds with sufficient balance\r\n\r\n{\r\n    \"transactionDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"amount\": 300,\r\n        \"currency\": \"NGN\",\r\n        \"transactionType\": \"withdrawal\",\r\n        \"transactionDate\": \"2024-09-09T15:00:00Z\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"johndoe@example.com\"\r\n    },\r\n    \"withdrawalMethod\": {\r\n        \"method\": \"ATM\",\r\n        \"referenceId\": \"ATM123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Withdrawal for Wisdom’s personal expenses\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/withdrawal",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"withdrawal"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Withdrawal transaction completed successfully\",\n    \"transactionDetails\": {\n        \"transactionId\": \"TRANS987654321\",\n        \"accountNumber\": \"1234567890\",\n        \"amount\": 3000,\n        \"currency\": \"NGN\",\n        \"transactionType\": \"withdrawal\",\n        \"transactionDate\": \"2024-09-10T15:38:20.762Z\",\n        \"newBalance\": 12000\n    },\n    \"customerDetails\": {\n        \"customerId\": \"CUST0987654321\",\n        \"firstName\": \"Wisdom\",\n        \"lastName\": \"Abasibom\",\n        \"phoneNumber\": \"+2348012345678\",\n        \"email\": \"wisdomabasibom@example.com\"\n    },\n    \"timestamp\": \"2024-09-10T15:38:20.762Z\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Check that the status is \"success\"\r",
+							"pm.test(\"Status is 'success'\", function () {\r",
+							"    pm.expect(response.status).to.eql(\"success\");\r",
+							"});\r",
+							"\r",
+							"// Check the message is \"Transfer completed successfully\"\r",
+							"pm.test(\"Message is correct\", function () {\r",
+							"    pm.expect(response.message).to.eql(\"Transfer completed successfully\");\r",
+							"});\r",
+							"\r",
+							"// Check that transferDetails is not empty\r",
+							"pm.test(\"Transfer Details is not empty\", function () {\r",
+							"    pm.expect(response.transferDetails).to.be.an('object').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that customerDetails is not empty\r",
+							"pm.test(\"Customer Details is not empty\", function () {\r",
+							"    pm.expect(response.customerDetails).to.be.an('object').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check that the response time is less than 500 ms\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Check that the status code is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//TC 6: Check Funds Transfer Between Two Valid Accounts\r\n{\r\n    \"transferDetails\": {\r\n        \"sourceAccountNumber\": \"1234567890\",\r\n        \"beneficiaryAccountNumber\": \"0987654321\",\r\n        \"amount\": 10,\r\n        \"currency\": \"NGN\",\r\n        \"transferDate\": \"2024-09-09T16:00:00Z\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"johndoe@example.com\"\r\n    },\r\n    \"transferMethod\": {\r\n        \"method\": \"online_banking\",\r\n        \"referenceId\": \"REF123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Light funds to paint Lagos Red - with love from zaddy\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/fundsTransfer",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"fundsTransfer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-6",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//TC 6: Check Funds Transfer Between Two Valid Accounts\r\n{\r\n    \"transferDetails\": {\r\n        \"sourceAccountNumber\": \"1234567890\",\r\n        \"beneficiaryAccountNumber\": \"0987654321\",\r\n        \"amount\": 10,\r\n        \"currency\": \"NGN\",\r\n        \"transferDate\": \"2024-09-09T16:00:00Z\"\r\n    },\r\n    \"customerDetails\": {\r\n        \"customerId\": \"CUST0987654321\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"phoneNumber\": \"+2348012345678\",\r\n        \"email\": \"johndoe@example.com\"\r\n    },\r\n    \"transferMethod\": {\r\n        \"method\": \"online_banking\",\r\n        \"referenceId\": \"REF123456789\"\r\n    },\r\n    \"metadata\": {\r\n        \"narration\": \"Light funds to paint Lagos Red - with love from zaddy\",\r\n        \"source\": \"Mobile App\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/fundsTransfer",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"fundsTransfer"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Funds transfer completed successfully\",\n    \"transferDetails\": {\n        \"transferId\": \"TRANS987654321\",\n        \"sourceAccountNumber\": \"1234567890\",\n        \"beneficiaryAccountNumber\": \"0987654321\",\n        \"amount\": 10,\n        \"currency\": \"NGN\",\n        \"transferDate\": \"2024-09-09T16:05:00Z\",\n        \"accountBalance\": 20000,\n        \"ledgerBalance\": 20010\n    },\n    \"customerDetails\": {\n        \"customerId\": \"CUST0987654321\",\n        \"firstName\": \"Wisdom\",\n        \"lastName\": \"Abasibom\",\n        \"phoneNumber\": \"+2348012345678\",\n        \"email\": \"wisdomabasibom@example.com\"\n    },\n    \"timestamp\": \"{{$isoTimestamp}}\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-10",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check authorization token\", function () {\r",
+							"    const authToken = pm.request.headers.get(\"Authorization\");\r",
+							"    pm.expect(authToken).to.equal(\"valid_admin_token\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response time\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check for absence of errors object\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.not.have.property('errors');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "invalid_admin_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//TC 10: Check unauthorized user attempting a restricted action\r\n\r\n{\r\n    \"accountDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"customerId\": \"CUST0987654321\"\r\n    },\r\n    \"newLimits\": {\r\n        \"dailyLimit\": 1000000,  // New daily transaction limit\r\n        \"monthlyLimit\": 3000000  // New monthly transaction limit\r\n    },\r\n    \"requestDetails\": {\r\n        \"requestedBy\": \"Wisdom Abasibom\",\r\n        \"reason\": \"Increased transaction frequency due to business expansion.\",\r\n        \"dateOfRequest\": \"{{$isoTimestamp}}\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/unauthorizedTransLimit",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"unauthorizedTransLimit"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "T10",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountDetails\": {\r\n        \"accountNumber\": \"1234567890\",\r\n        \"customerId\": \"CUST0987654321\"\r\n    },\r\n    \"newLimits\": {\r\n        \"dailyLimit\": 1000000,  // New daily transaction limit\r\n        \"monthlyLimit\": 3000000  // New monthly transaction limit\r\n    },\r\n    \"requestDetails\": {\r\n        \"requestedBy\": \"Wisdom Abasibom\",\r\n        \"reason\": \"Increased transaction frequency due to business expansion.\",\r\n        \"dateOfRequest\": \"2024-09-10T17:21:37.761Z\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/unauthorizedTransLimit",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"unauthorizedTransLimit"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Unauthorized access\",\n    \"code\": \"401\",\n    \"errors\": [\n        {\n            \"field\": \"authorization\",\n            \"message\": \"You do not have permission to increase transaction limits.\"\n        }\n    ],\n    \"timestamp\": \"2024-09-10T10:49:12.574Z\"\n}"
+				}
+			]
+		},
+		{
+			"name": "TC-11",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check Basic Auth credentials\r",
+							"pm.test(\"Basic Auth credentials are valid\", function () {\r",
+							"    var auth = pm.request.headers.filter(function (header) {\r",
+							"        return header.key === \"Authorization\";\r",
+							"    })[0];\r",
+							"\r",
+							"    // Decode the base64 encoded credentials\r",
+							"    var encodedCredentials = auth.value.split(\" \")[1];\r",
+							"    var decodedCredentials = atob(encodedCredentials).split(\":\");\r",
+							"\r",
+							"    var username = decodedCredentials[0];\r",
+							"    var password = decodedCredentials[1];\r",
+							"\r",
+							"    pm.expect(username).to.eql(\"admin\");\r",
+							"    pm.expect(password).to.eql(\"password\");\r",
+							"});\r",
+							"\r",
+							"// Check that the response code is 200\r",
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Check that the response time is less than 500 ms\r",
+							"pm.test(\"Response time is less than 500 ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Parse the response body as JSON\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"// Check that the status is \"success\"\r",
+							"pm.test(\"Status is 'success'\", function () {\r",
+							"    pm.expect(responseBody.status).to.eql(\"success\");\r",
+							"});\r",
+							"\r",
+							"// Check that the message is \"Bank account deleted successfully.\"\r",
+							"pm.test(\"Message is 'Bank account deleted successfully.'\", function () {\r",
+							"    pm.expect(responseBody.message).to.eql(\"Bank account deleted successfully.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//TC 11: Check authorized user attempting a restricted action\r\n\r\n{\r\n    \"confirmation\": true,\r\n    \"reason\": \"User requested account deletion.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mock_baseURL}}/authorizedAcctDel?acctID=234",
+					"host": [
+						"{{mock_baseURL}}"
+					],
+					"path": [
+						"authorizedAcctDel"
+					],
+					"query": [
+						{
+							"key": "acctID",
+							"value": "234"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "TC-11",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//TC 11: Check authorized user attempting a restricted action\r\n\r\n{\r\n    \"confirmation\": true,\r\n    \"reason\": \"User requested account deletion.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io/authorizedAcctDel?acctID=234",
+							"protocol": "https",
+							"host": [
+								"37b0d3c0-ec3a-41e3-af99-1d43469ae7db",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"authorizedAcctDel"
+							],
+							"query": [
+								{
+									"key": "acctID",
+									"value": "234"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Bank account deleted successfully.\",\n    \"timestamp\": \"{{$isoTimestamp}}\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "mock_baseURL",
+			"value": "https://37b0d3c0-ec3a-41e3-af99-1d43469ae7db.mock.pstmn.io"
+		}
+	]
+}
