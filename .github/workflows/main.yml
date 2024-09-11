@@ -18,8 +18,8 @@ jobs:
       # Step 2: Use curl to fetch the latest Postman collection
       - name: Fetch Postman Collection
         run: |
-          curl --location --request GET 'https://api.getpostman.com/collections/{{POSTMAN_COLLECTION_ID}}' \
-          --header 'X-Api-Key: {{POSTMAN_API_KEY}}' \
+          curl --location --request GET 'https://api.getpostman.com/collections/${{ secrets.POSTMAN_COLLECTION_ID }}' \
+          --header 'X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}' \
           --output postman_collection.json
 
       # Step 3: Commit the updated collection file
