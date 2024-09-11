@@ -13,7 +13,7 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Step 2: Use curl to fetch the latest Postman collection
       - name: Fetch Postman Collection
