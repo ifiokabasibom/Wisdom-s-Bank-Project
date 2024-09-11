@@ -33,6 +33,7 @@ jobs:
       # Step 4: Push the changes back to GitHub and #Step 5 (Optimization) - Github Token
       - name: Push Changes
         run: |
+          git diff --quiet && git diff --staged --quiet || git commit -m "Updated Postman collection"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
