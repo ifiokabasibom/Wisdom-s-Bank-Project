@@ -1,0 +1,36 @@
+name: Update Postman Collection
+
+# This runs the action on a schedule (e.g., once a day)
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs daily at midnight (UTC)
+  workflow_dispatch:     # Also allows manual trigger of the workflow
+
+jobs:
+  update-collection:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Step 2: Use curl to fetch the latest Postman collection
+      - name: Fetch Postman Collection
+        run: |
+          curl --location --request GET 'https://api.getpostman.com/collections/{{POSTMAN_COLLECTION_ID}}' \
+          --header 'X-Api-Key: {{POSTMAN_API_KEY}}' \
+          --output postman_collection.json
+
+      # Step 3: Commit the updated collection file
+      - name: Commit Changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add postman_collection.json
+          git commit -m "Update Postman collection $(date +'%Y-%m-%d %H:%M:%S')"
+
+      # Step 4: Push the changes back to GitHub
+      - name: Push Changes
+        run: |
+          git push
